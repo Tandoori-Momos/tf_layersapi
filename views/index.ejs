@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" charset="utf-8"></script>
+
+  </head>
+
+  <script type="text/javascript">
+    $(document).ready(() => {
+      $('#train-network').click(function() {
+        var rate = $('#learning-rate').val();
+        var epoch = $('#epoch').val();
+        var num_iter = $('#num_iter').val();
+
+        var data = "status=train"+"&rate="+rate+"&epoch="+epoch+"&iter="+num_iter;
+        $.post('/', data, function(e) {
+          if(e == "error") {
+            alert("Error");
+          } else {
+            alert(e);
+          }
+        });
+      });
+    });
+  </script>
+  <body>
+    <input type="text" id = "learning-rate" placeholder="learning rate"> <br><br>
+    <input type="text" id = "epoch" placeholder="epoch"><br><br>
+    <input type="text" id = "num_iter" placeholder="number of iterations"><br><br>
+    <button id = "train-network">Train Network</button>
+  </body>
+</html>
