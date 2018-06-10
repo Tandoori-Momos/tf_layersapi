@@ -11,16 +11,29 @@ module.exports = function(app) {
 
   app.post('/', urlencodedParser,function(req,res) {
     if(req.body) {
-      if(req.body.status == "train") {
+      if(req.body.status == "build") {
 
         var alpha = req.body.rate;
+        // var epoch = req.body.epoch;
+        // var num_iter = req.body.iter;
+
+        tf.CreateNetwork(0.1);
+        res.send("empty network built");
+
+      }
+      if(req.body.status == "train") {
+
         var epoch = req.body.epoch;
         var num_iter = req.body.iter;
 
-        tf.TrainNetwork(alpha, epoch, num_iter);
 
-        res.send("Training Complete");
+        tf.TrainNetwork(epoch, num_iter);
 
+        res.send('Training Complete');
+      }
+
+      if(req.body.status == "loss") {
+        res.send(tf.getLosses(epoch, num_iter));
       }
     }
   });

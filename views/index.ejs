@@ -10,12 +10,12 @@
 
   <script type="text/javascript">
     $(document).ready(() => {
-      $('#train-network').click(function() {
+      $('#build-network').click(function() {
         var rate = $('#learning-rate').val();
-        var epoch = $('#epoch').val();
-        var num_iter = $('#num_iter').val();
+        // var epoch = $('#epoch').val();
+        // var num_iter = $('#num_iter').val();
 
-        var data = "status=train"+"&rate="+rate+"&epoch="+epoch+"&iter="+num_iter;
+        var data = "status=build"+"&rate="+rate;
         $.post('/', data, function(e) {
           if(e == "error") {
             alert("Error");
@@ -24,12 +24,42 @@
           }
         });
       });
+
+      $('#train').click(function() {
+        var rate = $('#learning-rate').val();
+        var epoch = $('#epoch').val();
+        var num_iter = $('#num_iter').val();
+
+        var data = "status=train"+"&epoch="+epoch+"&iter="+num_iter;
+        $.post('/', data, function(e) {
+          if(e == "error") {
+            alert("Error");
+          } else {
+            alert(e);
+          }
+        });
+      });
+      $('#loss').click(function() {
+        var data = "status=loss";
+        $.post('/', data, function(e) {
+          if(e == "error") {
+            alert("Error");
+          } else {
+            alert(e);
+          }
+        });
+      });
+
     });
   </script>
   <body>
     <input type="text" id = "learning-rate" placeholder="learning rate"> <br><br>
+
+    <button id = "build-network">Build Network</button><br><br>
     <input type="text" id = "epoch" placeholder="epoch"><br><br>
     <input type="text" id = "num_iter" placeholder="number of iterations"><br><br>
-    <button id = "train-network">Train Network</button>
+    <button id = "train">Train Network</button>
+    <br><br>
+    <button id = "loss">Get Losses</button>
   </body>
 </html>
